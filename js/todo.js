@@ -1,15 +1,17 @@
+
 export const todo = () => {
     const todoForm = document.querySelector('#form-todo');
     const author = document.getElementById('author');
     const post = document.getElementById('post');
-    const todoTitle = document.querySelector('.todo__title');
     const list = document.querySelector('.todo__list');
 
-    const todoCount = document.querySelector('.todo__count');
+    const count = document.querySelector('.todo__count');
 
-    let count = 0;
+    count.innerHTML = 0;
 
-    todoCount.textContent = count;
+    count.innerHTML = +count.innerHTML;
+
+
 
     const base = {
 
@@ -56,9 +58,8 @@ export const todo = () => {
       const objTodo = base.addTodo(authorText, postText);
       const todoLi = createTodo(objTodo);
       list.append(todoLi);
-      count = count + 1;
-      todoCount.textContent = String(count);
-      todoForm.reset()
+      todoForm.reset();
+      
     };
 
     const createTodo = ({ ready, author, post, id} ) => {
@@ -103,12 +104,12 @@ export const todo = () => {
 
       if(btn) {
         const post = btn.closest('.post');
-        btn.remove();
-        count = count - 1
-        todoCount.textContent = String(count);
+        // btn.remove();
+        btn.innerHTML = "X";
         post.classList.add('post_complete');
         const id = btn.dataset.id;
         base.check(id);
+        btn.addEventListener('click', () => post.remove());
       }
     
     };
