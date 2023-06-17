@@ -13,17 +13,31 @@ export const calc = () => {
       op = op.replace('х', '*').replace('÷', '/');
     
       curCalcBtn.addEventListener('click', () => {
-        let a = inputX.value;
-        let b = inputY.value;
+        let a = Number(inputX.value);
+        let b = Number(inputY.value);
           // let a = Number(document.querySelector('#x').value);
           // let b = Number(document.querySelector('#y').value);
-          let result = eval(`${a}${op}${b}`);
+          let result; 
+          // = eval(`${a}${op}${b}`);
+          switch(op) {
+            case '+':
+              result = a + b;
+              break;
+            case '-':
+              result = a - b;
+              break;
+              case '*':
+                result = a * b;
+                break;
+              case '/':
+                result = a / b;
+                break;
+          }
           result = (result.toFixed(2));
           calcResult.textContent = result;
           
           calcForm.reset();
       });
-    
     }
   }
   makeCalc();
