@@ -5,18 +5,17 @@ export const todo = () => {
     const post = document.getElementById('post');
     const list = document.querySelector('.todo__list');
 
-    const count = document.querySelector('.todo__count');
+    const todoCount = document.querySelector('.todo__count');
 
-    count.innerHTML = 0;
+    todoCount.textContent = 0;
 
-    count.innerHTML = +count.innerHTML;
-
-
+    let count = 0;
 
     const base = {
 
       init() {
         this.todo = this.getTodoLS();
+        allTasks();
       },
       employee: 'Петров Сергей Иванович',
       todo: [],
@@ -33,9 +32,10 @@ export const todo = () => {
           id: 'td' + (Date.now()),
           author,
           post,
-          ready: false, 
+          ready: false,
+          
         };
-            this.todo.push(todo)
+            this.todo.push(todo);
             this.setTodoLS();
             return todo;
         },
@@ -54,11 +54,12 @@ export const todo = () => {
       
       const authorText = author.value;
       const postText = post.value;
-
       const objTodo = base.addTodo(authorText, postText);
       const todoLi = createTodo(objTodo);
       list.append(todoLi);
       todoForm.reset();
+      allTasks();
+    
       
     };
 
@@ -109,10 +110,26 @@ export const todo = () => {
         post.classList.add('post_complete');
         const id = btn.dataset.id;
         base.check(id);
-        btn.addEventListener('click', () => post.remove());
+        btn.addEventListener('click', () => {
+        post.remove();
+          allTasks();
+
+        });
       }
+      
     
     };
+
+    const allTasks = () => {
+      count = base.todo.length;
+      todoCount.textContent = `${[count]}`;
+  
+          }
+
+          // for (var i = 0; i < localStorage.length; i++) {
+          //   console.log(localStorage.getItem(localStorage.key(this.id)));
+          // }
+      
 
     todoForm.addEventListener('submit', addTodo);
     list.addEventListener('click', checkTodo);
